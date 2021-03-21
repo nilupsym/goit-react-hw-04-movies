@@ -19,7 +19,7 @@ class Reviews extends Component {
             {reviews.map(
                 review => (
                     <li key={review.id}>
-                        <h4>{review.author}</h4>
+                        <h4>Author: {review.author}</h4>
                         <p>{review.content}</p>
                     </li>
                 )

@@ -22,7 +22,7 @@ class HomePage extends Component {
                     {movies.map(
                         movie => (
                             <li key={movie.id}>
-                                <Link to={`/movies${this.props.match.url}${movie.id}`}>
+                                <Link to={`${this.props.match.url}movies/${movie.id}`}>
                                     {movie.title} {movie.name}
                                 </Link>
                             </li>
