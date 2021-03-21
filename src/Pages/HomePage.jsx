@@ -15,10 +15,11 @@ class HomePage extends Component {
 
     render() {
         // console.log('matchURL:', this.props.match.url);
+        const { movies } = this.state;
         return (
             <>
                 <ul>
-                    {this.state.movies.map(
+                    {movies.map(
                         movie => (
                             <li key={movie.id}>
                                 <Link to={`/movies${this.props.match.url}${movie.id}`}>

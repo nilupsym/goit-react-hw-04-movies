@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import { NavLink, Route } from 'react-router-dom';
 import Axios from 'axios';
+import Cast from './Cast';
+import Reviews from './Reviews';
 
 class MoviesDetailsPage extends Component {
     state = {
-        img: null,
         title: null,
+        release_date: null,
+        vote_average: null,
+        poster_path: null,
         overview: null,
         genres: [],
     };
@@ -17,7 +22,7 @@ class MoviesDetailsPage extends Component {
     }
 
     render() {
-        const { img, title, overview, genres, poster_path, vote_average, release_date } = this.state;
+        const { title, overview, genres, poster_path, vote_average, release_date } = this.state;
 
         return <>
             <button>Go back</button>
@@ -35,10 +40,12 @@ class MoviesDetailsPage extends Component {
             </ul>
             <p>Additional information</p>
             <ul>
-                <li>Cast</li>
-                <li>Reviews</li>
+                <li><NavLink to={`${this.props.match.url}/cast`}>Cast</NavLink></li>
+                <li><NavLink to={`${this.props.match.url}/reviews`}>Reviews</NavLink></li>
             </ul>
-        </>;
+            <Route path={`${this.props.match.path}/cast`} component={Cast} />
+            <Route path={`${this.props.match.path}/reviews`} component={Reviews} />
+        </>
     }
 
 }
