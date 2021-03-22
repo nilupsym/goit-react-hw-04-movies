@@ -13,12 +13,14 @@ li {
 }
 
 .navLink {
-  font-size: 20px;
-  color: blue;
+  padding: 5px 10px;
+  font-size: 24px;
+  color: #000;
   text-decoration: none;
+  border-radius: 5px;
 }
 
 .active {
-  color: palevioletred;
-  text-decoration: underline;
+  color: #fff;
+  background-color: cornflowerblue;
 }

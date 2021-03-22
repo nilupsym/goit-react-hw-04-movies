@@ -20,16 +20,17 @@ class SearchBar extends Component {
         return (
             <form
                 onSubmit={this.handleSubmit}
-            className={s.SearchForm}
-            >
+                className={s.SearchForm}>
+                
                 <input
                     onChange={this.handleChange}
                     className={s.SearchFormInput}
                     type="text"
                     value={this.state.query}
-                    placeholder="Search movies"
-                />
-                    <button type="submit" className={s.SearchFormButton} />
+                    placeholder="Search movies" />
+                
+                <button type="submit" className={s.SearchFormButton} />
+
             </form>
         )
     }

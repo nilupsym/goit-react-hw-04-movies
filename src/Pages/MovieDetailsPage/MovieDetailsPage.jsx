@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import Axios from 'axios';
-import Cast from '../components/Cast/Cast';
-import Reviews from '../components/Reviews/Reviews';
+import Cast from '../../components/Cast/Cast';
+import Reviews from '../../components/Reviews/Reviews';
+import s from './MovieDetailsPage.module.css';
+import routes from '../../routes';
+import Api from '../../services/Api';
 
 class MoviesDetailsPage extends Component {
     state = {
@@ -12,22 +14,32 @@ class MoviesDetailsPage extends Component {
         poster_path: null,
         overview: null,
         genres: [],
+        error: null,
     };
 
     async componentDidMount() {
         const {movieId} = this.props.match.params;
-        const response = await Axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=6ac85d37fc5933a9e58505b5650ac08b&language=en-US`);
-        // console.log(response.data);
-        this.setState({ ...response.data });
+        await Api
+            .fetchMovieDetails(movieId)
+            .then(data => this.setState({ ...data }))
+            .catch(error => this.setState({ error }));
     }
+
+    handleGoBack = () => {
+        const { location, history } = this.props;
+        // history.push(location?.state?.from || routes.movies);
+        if (location.state && location.state.from) { return history.push(location.state.from) }
+        history.push(routes.movies);
+
+    };
 
     render() {
         const { title, overview, genres, poster_path, vote_average, release_date } = this.state;
 
         const { url, path } = this.props.match;
 
-        return <>
-            <button>Go back</button>
+        return <div className={s.Container}>
+            <button type="button" className={s.Button} onClick={this.handleGoBack}>Go back</button>
             <h1>{title} ({`${release_date}`.substr(0, 4)})</h1>
             <p>User Score: {vote_average * 10} %</p>
             {poster_path && <img
@@ -47,7 +59,7 @@ class MoviesDetailsPage extends Component {
             </ul>
             <Route path={`${path}/cast`} component={Cast} />
             <Route path={`${path}/reviews`} component={Reviews} />
-        </>
+        </div>
     }
 
 }

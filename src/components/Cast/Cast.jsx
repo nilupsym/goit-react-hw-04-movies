@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import s from './Cast.module.css';
+import Api from '../../services/Api';
 
 class Cast extends Component {
     state = {
         actors: [],
+        error: null,
     };
-
+    
     async componentDidMount() {
-        const {movieId} = this.props.match.params;
-        const response = await Axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=6ac85d37fc5933a9e58505b5650ac08b&language=en-US`);
-        console.log(response.data);
-        this.setState({ actors: response.data.cast });
+        const { movieId } = this.props.match.params;
+        await Api
+            .fetchMovieCast(movieId)
+            .then(data => this.setState({ actors: data.cast }))
+            .catch(error => this.setState({ error }));
     }
 
     render() {
         const { actors } = this.state;
-        return <ul>
+        return <ul className={s.CastList}>
             {actors.map(
                 actor => (
                     <li key={actor.id}>
                         {actor.profile_path && <img
                                 src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
-                                alt={actor.name} />
-                        }
+                            alt={actor.name} />}
                         <p>{actor.name}</p>
                         <p>Character: {actor.character}</p>
                     </li>

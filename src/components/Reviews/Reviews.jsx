@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import s from './Reviews.module.css';
+import Api from '../../services/Api';
 
 class Reviews extends Component {
     state = {
         reviews: [],
+        error: null,
+
     };
 
     async componentDidMount() {
         const {movieId} = this.props.match.params;
-        const response = await Axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=6ac85d37fc5933a9e58505b5650ac08b&language=en-US&page=1`);
-        console.log(response.data);
-        this.setState({ reviews: response.data.results });
+        await Api
+            .fetchMovieReviews(movieId)
+            .then(data => this.setState({ reviews: data.results }))
+            .catch(error => this.setState({ error }));
     }
 
     render() {
         const { reviews } = this.state;
-        return <ul>
+        return <ul className={s.Container}>
             {reviews.map(
                 review => (
                     <li key={review.id}>
