@@ -1,5 +1,4 @@
 import { Component } from 'react';
-// import Axios from 'axios';
 import SearchBar from '../components/SearchBar/SearchBar';
 import MoviesList from '../components/MoviesList/MoviesList';
 import Api from '../services/Api';
@@ -7,28 +6,28 @@ import Api from '../services/Api';
 class MoviesPage extends Component {
     state = {
         query: '',
-        movies: []
+        movies: [],
+        error: null,
     };
-
-    onChangeQuery = query => {
-        this.setState(
-            {
-                movies: [],
-                currentPage: 1,
-                query: query,
-                error: null
-            }
-        );
-    }
-
+    
     async componentDidUpdate(prevProps, prevState) {
         if (prevState.query !== this.state.query) {
             const query = this.state.query;
+            const { location, history } = this.props;
             await Api
                 .fetchMovieByQuery(query)
                 .then(results => this.setState({ movies: results }))
                 .catch(error => this.setState({ error }));
+            
+            history.push({
+                pathname: location.pathname,
+                search: `query=${query}`,
+            });
         }
+    }
+
+    onChangeQuery = query => {
+        this.setState({ query, });
     }
 
     render() {
@@ -38,7 +37,7 @@ class MoviesPage extends Component {
             <>
                 <SearchBar onSubmit={this.onChangeQuery} />
                 
-                {movies.length > 0 && <MoviesList movies={movies} location={this.props.location} />}
+                {movies.length > 0 && <MoviesList movies={movies} />}
             </>
         )
     }

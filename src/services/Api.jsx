@@ -3,8 +3,6 @@ import axios from 'axios';
 const API_KEY = '6ac85d37fc5933a9e58505b5650ac08b';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-
-
 const fetchPopular = () => {
     return axios
         .get(`${BASE_URL}/trending/all/day?api_key=${API_KEY}`)

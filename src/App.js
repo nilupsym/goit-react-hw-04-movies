@@ -1,19 +1,19 @@
 import React, {Suspense, lazy} from 'react';
 import { Route, Switch } from 'react-router-dom';
 import AppBar from './components/AppBar/AppBar';
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './views/NotFoundPage';
 import routes from './routes';
 
 const HomePage = lazy(() =>
-  import('./pages/HomePage.jsx' /* webpackChunkName: "home-page" */)
+  import('./views/HomePage.jsx' /* webpackChunkName: "home-page" */)
 );
 
 const MovieDetailsPage = lazy(() =>
-  import('./pages/MovieDetailsPage/MovieDetailsPage.jsx' /* webpackChunkName: "movie-detail-page" */)
+  import('./views/MovieDetailsPage/MovieDetailsPage.jsx' /* webpackChunkName: "movie-detail-page" */)
 );
 
 const MoviesPage = lazy(() =>
-  import('./pages/MoviesPage.jsx' /* webpackChunkName: "movies-page" */)
+  import('./views/MoviesPage.jsx' /* webpackChunkName: "movies-page" */)
 );
 
 const App = () => (
