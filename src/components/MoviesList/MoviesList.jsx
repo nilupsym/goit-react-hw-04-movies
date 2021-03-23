@@ -9,7 +9,7 @@ const MoviesList = ({movies, location}) => {
                 ({id, title, name}) => (
                     <li key={id}>
                         <Link to={{
-                            pathname: `${routes.movies}/${id}}`,
+                            pathname: `${routes.movies}/${id}`,
                             state: { from: location }
                         }}>{ name }{ title }</Link>
                     </li>
