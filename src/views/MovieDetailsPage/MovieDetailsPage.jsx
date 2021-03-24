@@ -17,9 +17,9 @@ class MoviesDetailsPage extends Component {
         error: null,
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         const {movieId} = this.props.match.params;
-        await Api
+        Api
             .fetchMovieDetails(movieId)
             .then(data => this.setState({ ...data }))
             .catch(error => this.setState({ error }));

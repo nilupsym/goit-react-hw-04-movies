@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import queryString from 'query-string';
 import SearchBar from '../components/SearchBar/SearchBar';
 import MoviesList from '../components/MoviesList/MoviesList';
 import Api from '../services/Api';
@@ -9,25 +10,38 @@ class MoviesPage extends Component {
         movies: [],
         error: null,
     };
-    
-    async componentDidUpdate(prevProps, prevState) {
-        if (prevState.query !== this.state.query) {
-            const query = this.state.query;
-            const { location, history } = this.props;
-            await Api
+
+    componentDidMount() {
+        const query = this.getQueryFromProps(this.props);
+        if (query) {
+            Api
                 .fetchMovieByQuery(query)
                 .then(results => this.setState({ movies: results }))
                 .catch(error => this.setState({ error }));
-            
-            history.push({
-                pathname: location.pathname,
-                search: `query=${query}`,
-            });
+        }
+
+    }
+
+    componentDidUpdate(prevProps) {
+        const prevQuery = this.getQueryFromProps(prevProps);
+        const nextQuery = this.getQueryFromProps(this.props);
+        if (prevQuery !== nextQuery) {
+            Api
+                .fetchMovieByQuery(nextQuery)
+                .then(results => this.setState({ movies: results }))
+                .catch(error => this.setState({ error }));
         }
     }
 
+    getQueryFromProps = props => queryString.parse(props.location.search).query;
+
     onChangeQuery = query => {
+        const { location, history } = this.props;
         this.setState({ query, });
+        history.push({
+                pathname: location.pathname,
+                search: `query=${query}`,
+            });
     }
 
     render() {
@@ -36,7 +50,7 @@ class MoviesPage extends Component {
         return (
             <>
                 <SearchBar onSubmit={this.onChangeQuery} />
-                
+
                 {movies.length > 0 && <MoviesList movies={movies} />}
             </>
         )

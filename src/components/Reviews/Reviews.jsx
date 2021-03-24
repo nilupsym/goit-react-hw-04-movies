@@ -9,9 +9,9 @@ class Reviews extends Component {
 
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         const {movieId} = this.props.match.params;
-        await Api
+        Api
             .fetchMovieReviews(movieId)
             .then(data => this.setState({ reviews: data.results }))
             .catch(error => this.setState({ error }));

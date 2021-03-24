@@ -8,8 +8,8 @@ class HomePage extends Component {
         error: null,
     };
     
-    async componentDidMount() {
-        await Api
+    componentDidMount() {
+        Api
             .fetchPopular()
             .then(results => this.setState({ movies: results }))
             .catch(error => this.setState({ error }));

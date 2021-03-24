@@ -8,9 +8,9 @@ class Cast extends Component {
         error: null,
     };
     
-    async componentDidMount() {
+    componentDidMount() {
         const { movieId } = this.props.match.params;
-        await Api
+        Api
             .fetchMovieCast(movieId)
             .then(data => this.setState({ actors: data.cast }))
             .catch(error => this.setState({ error }));
