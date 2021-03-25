@@ -19,7 +19,10 @@ class Reviews extends Component {
 
     render() {
         const { reviews } = this.state;
-        return <ul className={s.Container}>
+        return (
+            <>
+                {!reviews || reviews.length === 0 && <p>Sorry, there are no reviews yet...</p>}
+                {reviews && <ul className={s.Container}>
             {reviews.map(
                 review => (
                     <li key={review.id}>
@@ -28,7 +31,8 @@ class Reviews extends Component {
                     </li>
                 )
             )}
-        </ul>
+        </ul>}
+            </>)
     }
 }
 

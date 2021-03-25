@@ -18,7 +18,10 @@ class Cast extends Component {
 
     render() {
         const { actors } = this.state;
-        return <ul className={s.CastList}>
+        return (
+            <>
+                {!actors || actors.length === 0 && <p>Sorry, no cast found...</p>}
+                {actors && <ul className={s.CastList}>
             {actors.map(
                 actor => (
                     <li key={actor.id}>
@@ -30,7 +33,9 @@ class Cast extends Component {
                     </li>
                 )
             )}
-        </ul>
+        </ul>}
+            </>
+        );
     }
 }
 

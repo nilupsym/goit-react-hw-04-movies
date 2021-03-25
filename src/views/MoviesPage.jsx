@@ -51,7 +51,7 @@ class MoviesPage extends Component {
             <>
                 <SearchBar onSubmit={this.onChangeQuery} />
 
-                {movies.length > 0 && <MoviesList movies={movies} />}
+                {movies && <MoviesList movies={movies} />}
             </>
         )
     }

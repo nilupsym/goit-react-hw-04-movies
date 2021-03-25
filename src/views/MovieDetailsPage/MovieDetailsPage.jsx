@@ -15,6 +15,7 @@ class MoviesDetailsPage extends Component {
         overview: null,
         genres: [],
         error: null,
+        cameFrom: null,
     };
 
     componentDidMount() {
@@ -23,13 +24,16 @@ class MoviesDetailsPage extends Component {
             .fetchMovieDetails(movieId)
             .then(data => this.setState({ ...data }))
             .catch(error => this.setState({ error }));
+        
+        this.setState({ cameFrom: this.props.location.state });
+
     }
 
     handleGoBack = () => {
-        const { location, history } = this.props;
-        // history.push(location?.state?.from || routes.movies);
-        if (location.state && location.state.from) { return history.push(location.state.from) }
-        history.push(routes.movies);
+        const { history } = this.props;
+        const { cameFrom } = this.state;
+        // history.push(cameFrom?.from || routes.movies);
+        cameFrom ? (history.push(cameFrom.from)) : (history.push(routes.home));
 
     };
 
