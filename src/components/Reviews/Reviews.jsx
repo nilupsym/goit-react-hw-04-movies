@@ -21,7 +21,7 @@ class Reviews extends Component {
         const { reviews } = this.state;
         return (
             <>
-                {!reviews || reviews.length === 0 && <p>Sorry, there are no reviews yet...</p>}
+                {(!reviews || reviews.length === 0) && (<p>Sorry, there are no reviews yet...</p>)}
                 {reviews && <ul className={s.Container}>
             {reviews.map(
                 review => (

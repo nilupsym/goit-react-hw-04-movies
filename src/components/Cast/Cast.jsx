@@ -20,7 +20,7 @@ class Cast extends Component {
         const { actors } = this.state;
         return (
             <>
-                {!actors || actors.length === 0 && <p>Sorry, no cast found...</p>}
+                {(!actors || actors.length === 0) && (<p>Sorry, no cast found...</p>)}
                 {actors && <ul className={s.CastList}>
             {actors.map(
                 actor => (
